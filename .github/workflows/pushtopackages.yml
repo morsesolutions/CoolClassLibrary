@@ -2,8 +2,6 @@ name: Push to GitHub Packages
 
 on:
   push:
-    tags:
-    - "v[0-9]+.[0-9]+.[0-9]+"
   workflow_dispatch:
 
 jobs:
@@ -22,15 +20,11 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore 
 
-      
+    - run:  mkdir nugetpkg
+    
     - name: Pack
-      run: dotnet pack --configuration Release --no-build --output .
+      run: dotnet pack --configuration Release --no-build --output nugetpkg
       
-    - run:  ls
-      
-    - name: Push
-      run: |
-        dotnet nuget add source --username morsesolutions --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/morsesolutions/index.json"
-        dotnet nuget push CoolClassLibrary.1.0.0.nupkg --source "github" --api-key ${GITHUB_TOKEN}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - run: (cd nugetpkg && nfile=*.nupkg)
+    - run: echo $nfile  
+
