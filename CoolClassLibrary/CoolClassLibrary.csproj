@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <PackageId>CoolClassLibrary</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>morsesolutions</Authors>
+    <Company>morsesolutions</Company>
+    <PackageDescription>This package adds integers</PackageDescription>
+    <RepositoryUrl>https://github.com/morsesolutions/coolclasslibrary</RepositoryUrl>
   </PropertyGroup>
 
 </Project>
