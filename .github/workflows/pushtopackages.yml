@@ -20,11 +20,15 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore 
 
-    - run:  mkdir nugetpkg
-    
     - name: Pack
-      run: dotnet pack --configuration Release --no-build --output nugetpkg
+      run: dotnet pack --configuration Release --no-build --output .
       
-    - run: (cd nugetpkg && nfile=*.nupkg)
-    - run: echo $nfile  
+    - run:  ls
+      
+    - name: Push
+      run: |
+        dotnet nuget add source --username morsesolutions --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/morsesolutions/index.json"
+        dotnet nuget push ./*.nupkg --skip-duplicate --source "github" --api-key ${GITHUB_TOKEN}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
